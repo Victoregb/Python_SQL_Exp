@@ -153,3 +153,10 @@ datos = cursor.fetchall()
 datos
 
 # %%
+cursor = conect.cursor()
+cursor.execute('''SELECT nombre, trabajo, ciudades, pelis FROM pelis_prestadas
+               WHERE NOT trabajo LIKE 'Enfermería';''')
+datos = cursor.fetchall()
+datos
+
+# %%
