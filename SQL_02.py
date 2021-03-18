@@ -68,5 +68,88 @@ datos = pd.read_sql('SELCT * FROM pelis_prestadas', conect)
 datos
 #Un vez hecho esto y jugado con Pandas y sqlite va siendo hora de volver al libro.
 # %%
+cursor = conect.cursor()
+cursor.execute('''SELECT nombre, trabajo, pelis FROM pelis_prestadas
+               WHERE ciudades = 'Donostia';''')
+datos = cursor.fetchall()
+datos
+# %%
+cursor = conect.cursor()
+cursor.execute('''SELECT nombre, trabajo, pelis FROM pelis_prestadas
+               WHERE ciudades = 'Donostia' AND hijos = 0;''')
+datos = cursor.fetchall()
+datos
+
+# %%
+cursor = conect.cursor()
+cursor.execute('''SELECT nombre, trabajo, ciudades, pelis FROM pelis_prestadas
+               WHERE ciudades <= 'M' AND hijos = 0;''')
+datos = cursor.fetchall()
+datos
+
+# %%
+cursor = conect.cursor()
+cursor.execute('''SELECT nombre, trabajo, ciudades, pelis FROM pelis_prestadas
+               WHERE ciudades <= 'M' AND hijos >= 3;''')
+datos = cursor.fetchall()
+datos
+
+# %%
+cursor = conect.cursor()
+cursor.execute('''SELECT nombre, trabajo, ciudades, pelis FROM pelis_prestadas
+               WHERE ciudades <= 'M' OR hijos >=3;''')
+datos = cursor.fetchall()
+datos
+
+# %%
+#El simbolo % en la busqueda con LIKE indica que hay un número indeterminado
+# de elementos que pueden preceder a los terminos indicados.
+cursor = conect.cursor()
+cursor.execute('''SELECT nombre, trabajo, ciudades, pelis FROM pelis_prestadas
+               WHERE trabajo LIKE '%ía';''')
+datos = cursor.fetchall()
+datos
+
+# %%
+#Por otro lado el uso de _ indica el número exacto de carácteres indeterminados,
+# como podemos ver en el ejemplo 8 carácteres antes de 'ía'.
+cursor = conect.cursor()
+cursor.execute('''SELECT nombre, trabajo, ciudades, pelis FROM pelis_prestadas
+               WHERE trabajo LIKE '________ía';''')
+datos = cursor.fetchall()
+datos
+
+# %%
+#Interesante, usando la busqueda por carácteres la busqueda no es inclusiva
+# para la ultima letra (para incluir Psicología, la busqueda de I hasta Q, no P)
+cursor = conect.cursor()
+cursor.execute('''SELECT nombre, trabajo, ciudades, pelis FROM pelis_prestadas
+               WHERE trabajo BETWEEN 'I' AND 'Q';''')
+datos = cursor.fetchall()
+datos
+
+# %%
+#La busqueda es inclusiva, los resultados incluye tanto 1 como 3 hijos.
+cursor = conect.cursor()
+cursor.execute('''SELECT nombre, trabajo, hijos, pelis FROM pelis_prestadas
+               WHERE hijos BETWEEN 1 AND 3;''')
+datos = cursor.fetchall()
+datos
+
+# %%
+#Se puede pasar una lista con IN
+cursor = conect.cursor()
+cursor.execute('''SELECT nombre, trabajo, ciudades, pelis FROM pelis_prestadas
+               WHERE trabajo IN ('Psicología', 'Enfermería');''')
+datos = cursor.fetchall()
+datos
+
+# %%
+#O con NOT IN en caso de querer excluir elementos. 
+cursor = conect.cursor()
+cursor.execute('''SELECT nombre, trabajo, ciudades, pelis FROM pelis_prestadas
+               WHERE trabajo NOT IN ('Psicología', 'Enfermería');''')
+datos = cursor.fetchall()
+datos
 
 # %%
