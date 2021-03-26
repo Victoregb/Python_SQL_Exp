@@ -5,7 +5,6 @@
 #%%
 import sqlite3
 import pandas as pd
-import 
 # %%
 conect = sqlite3.connect('base_datos.db')
 df = pd.read_sql('SELECT * FROM info_payaso', conect)
