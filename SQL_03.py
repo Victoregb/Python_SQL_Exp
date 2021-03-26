@@ -33,10 +33,10 @@ def borrar_tabla(nombre, db = 'base_datos.db'):
 # %%
 borrar_tabla('info_payaso')
 crear_tabla('info_payaso', '''
-            nombre VARCHAR(50) DEFAULT NULL,
-            visto_ult_vez VARCHAR(50) DEFAULT NULL,
-            descripción VARCHAR(50) DEFAULT NULL,
-            actividades VARCHAR(50) DEFAULT NULL
+            nombre text DEFAULT NULL,
+            visto_ult_vez text DEFAULT NULL,
+            descripción text DEFAULT NULL,
+            actividades text DEFAULT NULL
             ''')
 # %%
 columnas = ['nombre', 'visto_ult_vez', 'descripción', 'actividades']
@@ -138,3 +138,5 @@ df
 
 # %%
 
+conect.close()
+# %%
