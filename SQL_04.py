@@ -49,3 +49,27 @@ datos = cursor.fetchall()
 datos
 
 # %%
+df2 = pd.read_sql('SELECT rowid, * FROM aseos', conect)
+df3 = pd.read_sql('SELECT rowid, * FROM poblacion', conect)
+
+# %%
+df3
+# %%
+#Uno de los problemas que he tenido ha sido llamar a una variable Provincias y a la
+# otra provicia, lo que me ha llevado a equivocos. Para la proxima usar el mismo,
+# nombre o dejarlo más claro. Tambien he aprendido a emplear el nom_tabla.columna
+# lo cual no se diferencia mucho de Pandas.
+cursor.close()
+conect = sqlite3.connect('base_datos.db')
+cursor = conect.cursor()
+cursor.execute('''
+               SELECT aseos.aseos, poblacion.Provincias, poblacion.Total FROM aseos
+               INNER JOIN poblacion ON poblacion.Provincias LIKE '%'||aseos.provincia||'%' 
+               ''')
+datos = cursor.fetchall()
+cursor.close()
+datos
+# %%
+df4 = pd.DataFrame(datos, columns=['Aseos', 'Provincias', 'Población'])
+df4
+# %%
